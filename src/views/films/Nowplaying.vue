@@ -1,24 +1,27 @@
 <template>
-    <div>
-        <ul>
-            <li v-for="data in datalist" :key="data.id" @click="handleLi(data.id)">
-            <img :src="data.img | imgfilter" />
-            <h3>{{data.nm}}</h3>
-            <p>上映时间{{data.comingTitle}}</p>
-            <p>{{data.wish}}人想看</p>
-          </li>
-        </ul>
-    </div>
+  <div style="padding-bottom:50px">
+    <ul>
+      <li v-for="data in datalist" :key="data.id" @click="handleLi(data.id)">
+        <img :src="data.img | imgfilter" />
+        <h3>{{data.nm}}</h3>
+        <p>上映时间{{data.comingTitle}}</p>
+        <p>{{data.wish}}人想看</p>
+      </li>
+    </ul>
+  </div>
 </template>
 <script>
 import axios from "axios";
 import sidebar from "@/components/Sidebar";
-import swiper from "@/views/cinema/swiper";
+import swiper from "@/views/films/swiper";
 export default {
   data() {
     return {
       datalist: [],
-      fixed: false
+      fixed: false,
+      myHeight: {
+        height: 0
+      }
     };
   },
   created() {
@@ -30,18 +33,23 @@ export default {
       });
     }
 
-    axios.all([ getDataList()]).then(
-      axios.spread((val2) => {
+    axios.all([getDataList()]).then(
+      axios.spread(val2 => {
         this.datalist = val2.data.coming;
       })
     );
   },
+  methods: {
+    handleLi(id) {
+      this.$router.push({ name: "Detail", params: { myid: id } });
+    }
+  },
   filters: {
     imgfilter(target, idx) {
       if (typeof idx !== "undefined") return target.replace("w.h", "200.200");
-      return target.replace("w.h", "128.150");
+      return target.replace("w.h", "128.130");
     }
-  },
+  }
 };
 </script>
 <style  scoped>

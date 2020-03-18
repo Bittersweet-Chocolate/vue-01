@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="film" :style="mystyle">
     <swiper :key="imglist.length" ref="myswiper" perview="3" myclass="topSwiper" class="topSwiper">
       <template>
         <div class="swiper-slide" v-for="data in imglist" :key="data.id">
@@ -8,7 +8,7 @@
       </template>
     </swiper>
     <div :class="{'fixed':isFixed}" class="table">
-      <router-link to="/film/nowplaying" tag="p" active-class="chooseP" >正在热映</router-link>
+      <router-link to="/film/nowplaying" tag="p" active-class="chooseP">正在热映</router-link>
       <router-link to="/film/comingsoon" tag="p" active-class="chooseP">即将上映</router-link>
     </div>
     <!-- <keep-alive> -->
@@ -18,12 +18,15 @@
 </template>
 <script>
 import axios from "axios";
-import swiper from "@/views/cinema/swiper";
+import swiper from "@/views/films/swiper";
 export default {
   data() {
     return {
       imglist: [],
-      isFixed:false,
+      isFixed: false,
+      mystyle: {
+        height: 0
+      }
     };
   },
   created() {
@@ -40,7 +43,7 @@ export default {
         this.imglist = val.data.coming;
       })
     );
-
+    this.mystyle.height = document.documentElement.clientHeight - 50 + "px";
     window.onscroll = this.handleScroll;
   },
   methods: {
@@ -48,10 +51,9 @@ export default {
       //又tm是获取高度
       var scrollHeight = document.documentElement.scrollTop;
       var swiperHeight = this.$refs.myswiper.$el.offsetHeight;
-      scrollHeight >= swiperHeight ? (this.isFixed = true) : (this.isFixed = false);
-    },
-    handleLi(id) {
-      this.$router.push({ name: "Detail", params: { myid: id } });
+      scrollHeight >= swiperHeight
+        ? (this.isFixed = true)
+        : (this.isFixed = false);
     }
   },
   filters: {
@@ -71,7 +73,6 @@ export default {
 <style lang="scss" scoped>
 li {
   padding: 10px;
-  overflow: hidden;
 }
 img {
   float: left;
@@ -94,4 +95,5 @@ img {
   height: 40px;
   background: white;
 }
+
 </style>

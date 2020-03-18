@@ -2,11 +2,13 @@
   <div id="app">
     <!-- 路由容器 -->
     <router-view />
-    <tabbar></tabbar>
+    <tabbar v-if="isTabbarShow"></tabbar>
   </div>
 </template>
 <script>
 import tabbar from "./components/Tabbar";
+import { mapState } from 'vuex'
+// import bus from "@/bus/index";
 // 全局组件写法
 // import Vue from 'vue'
 // Vue.component("navbar",navbar)
@@ -14,14 +16,27 @@ import tabbar from "./components/Tabbar";
 export default {
   data() {
     return {
-      isShow: true,
+      // isShow: true,
       datalist: []
     };
   },
-  methods: {},
+  created() {
+    //vuex
+    // this.$store.state.isTabbarShow = true;
+    // console.log(this.$store.state.isTabbarShow);
+    // this.$store.commit("HideMaizouTabbar", true);
 
+    // 中央事件总线
+    // bus.$on("isTabbarShow", value => {
+    //   this.isShow = value;
+    // });
+  },
   components: {
     tabbar: tabbar
+  },
+  computed:{
+    // 使用对象展开运算符将此对象混入到外部对象中
+    ...mapState(['isTabbarShow'])
   }
 };
 </script>
