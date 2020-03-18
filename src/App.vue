@@ -31,12 +31,12 @@ export default {
     //   this.isShow = value;
     // });
   },
-  components: {
-    tabbar: tabbar
-  },
   computed:{
     // 使用对象展开运算符将此对象混入到外部对象中
     ...mapState(['isTabbarShow'])
+  },
+  components: {
+    tabbar: tabbar
   }
 };
 </script>

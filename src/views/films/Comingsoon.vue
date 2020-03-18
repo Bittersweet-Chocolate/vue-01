@@ -1,7 +1,7 @@
 <template>
   <div style="padding-bottom:50px">
     <ul>
-      <li v-for="data in $store.state.comingList" :key="data.id" @click="handleLi(data.id)">
+      <li v-for="data in comingListGetter" :key="data.id" @click="handleLi(data.id)">
         <img :src="data.img | imgfilter" />
         <h3>{{data.nm}}</h3>
         <p>上映时间{{data.comingTitle}}</p>
@@ -11,12 +11,12 @@
   </div>
 </template>
 <script>
+import { mapGetters } from 'vuex';
 export default {
   mounted() {
     const stores = this.$store;
     if (stores.state.comingList.length === 0) {
       stores.dispatch("getComingListAction");
-      console.log(stores.state.comingList);
     }
   },
   methods: {
@@ -29,6 +29,9 @@ export default {
       if (typeof idx !== "undefined") return target.replace("w.h", "200.200");
       return target.replace("w.h", "128.130");
     }
+  },
+  computed:{
+    ...mapGetters(['comingListGetter'])
   }
 };
 </script>

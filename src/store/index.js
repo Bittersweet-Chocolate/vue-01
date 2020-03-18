@@ -10,6 +10,11 @@ export default new Vuex.Store({
     isTabbarShow: true,
     comingList: []
   },
+  getters: {
+    comingListGetter(state) {
+      return state.comingList.filter((item, idx) => idx < 3)
+    }
+  },
   //唯一修改状态的位置
   mutations: {
     HideMaizouTabbar(state, data) {
@@ -25,7 +30,9 @@ export default new Vuex.Store({
   //异步处理
   actions: {
     //解构赋值牛逼
-    getComingListAction({commit}) {
+    getComingListAction({
+      commit
+    }) {
       axios({
         method: 'get',
         url: '/ajax/comingList?ci=1103&token=&limit=10&optimus_uuid=9B25A570686611EAA27B737CE9B8CDF0A84B9924FE3841B2A65069D827C815AE&optimus_risk_level=71&optimus_code=10',
