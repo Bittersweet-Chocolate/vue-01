@@ -43,5 +43,20 @@ export default new Vuex.Store({
       })
     }
   },
-  modules: {}
+  modules: {
+    a:{
+      state:{
+
+      },
+      getters:{
+
+      },
+      mutations:{
+
+      },
+      actions:{
+        
+      }
+    }
+  }
 })
